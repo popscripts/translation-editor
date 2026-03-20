@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f2f6f8;
+  --foreground: #1f2e33;
+  --card: #fbfdfe;
+  --card-foreground: #1f2e33;
+  --popover: #fbfdfe;
+  --popover-foreground: #1f2e33;
+  --primary: rgb(81, 118, 128);
+  --primary-foreground: #f7fbfc;
+  --secondary: #dbe7eb;
+  --secondary-foreground: #24353b;
+  --muted: #e6eef1;
+  --muted-foreground: rgb(81, 118, 128);
+  --accent: #d7e5ea;
+  --accent-foreground: #24353b;
+  --destructive: #c25548;
+  --destructive-foreground: #fff7f5;
+  --border: #c5d6dc;
+  --input: #b5cad2;
+  --ring: rgb(81, 118, 128);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
 }
