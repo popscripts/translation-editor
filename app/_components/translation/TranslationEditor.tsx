@@ -77,7 +77,9 @@ type TranslationEditorProps = {
   onChange: (key: string, newValue: string) => void;
   onSave: () => void;
   onExport: () => void;
+  onSendToUat: () => void;
   saving: boolean;
+  sendingToUat: boolean;
   dirtyKeys: Set<string>;
 };
 
@@ -86,7 +88,9 @@ export default function TranslationEditor({
   onChange,
   onSave,
   onExport,
+  onSendToUat,
   saving,
+  sendingToUat,
   dirtyKeys,
 }: TranslationEditorProps) {
   const [search, setSearch] = useState('');
@@ -235,6 +239,10 @@ export default function TranslationEditor({
           <Button onClick={onSave} disabled={saving} className="gap-2">
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             Zapisz
+          </Button>
+          <Button variant="outline" onClick={onSendToUat} disabled={sendingToUat} className="gap-2">
+            {sendingToUat ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+            Wyślij do UAT
           </Button>
           <Button variant="outline" onClick={onExport} className="gap-2">
             <Download className="w-4 h-4" /> Eksportuj JSON

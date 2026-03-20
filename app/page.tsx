@@ -35,6 +35,7 @@ export default function Home() {
   const [localTranslations, setLocalTranslations] = useState<Record<string, string> | null>(null);
   const [showUploader, setShowUploader] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [sendingToUat, setSendingToUat] = useState(false);
 
   const activeFile = useMemo(
     () => files.find((file) => file.id === activeFileId) ?? null,
@@ -179,6 +180,37 @@ export default function Home() {
     URL.revokeObjectURL(url);
   }
 
+  async function handleSendToUat() {
+    if (!localTranslations || !activeFile) {
+      return;
+    }
+
+    setSendingToUat(true);
+    try {
+      const response = await fetch("/api/uat/push", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: activeFile.name,
+          translations: unflattenJSON(localTranslations),
+          keys_count: Object.keys(localTranslations).length,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => ({}))) as { error?: string };
+        throw new Error(data.error || "Nie udało się wysłać danych do UAT.");
+      }
+
+      alert("Wysłano dane do UAT.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Nieznany błąd wysyłki do UAT.";
+      alert(message);
+    } finally {
+      setSendingToUat(false);
+    }
+  }
+
   if (!activeFileId && !showUploader) {
     return (
       <div className="min-h-screen bg-background">
@@ -292,7 +324,9 @@ export default function Home() {
             onChange={handleTranslationChange}
             onSave={handleSave}
             onExport={handleExport}
+            onSendToUat={handleSendToUat}
             saving={saving}
+            sendingToUat={sendingToUat}
             dirtyKeys={dirtyKeys}
           />
         ) : (
