@@ -1,25 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f2f6f8;
-  --foreground: #1f2e33;
-  --card: #fbfdfe;
-  --card-foreground: #1f2e33;
-  --popover: #fbfdfe;
-  --popover-foreground: #1f2e33;
-  --primary: rgb(81, 118, 128);
-  --primary-foreground: #f7fbfc;
-  --secondary: #dbe7eb;
-  --secondary-foreground: #24353b;
-  --muted: #e6eef1;
-  --muted-foreground: rgb(81, 118, 128);
-  --accent: #d7e5ea;
-  --accent-foreground: #24353b;
-  --destructive: #c25548;
-  --destructive-foreground: #fff7f5;
-  --border: #c5d6dc;
-  --input: #b5cad2;
-  --ring: rgb(81, 118, 128);
+  --background: color(srgb 0.1022 0.1022 0.1105);
+  --background-secondary: color(srgb 0.1647 0.1647 0.1777);
+  --foreground: color(srgb 0.8228 0.8278 0.8278);
+  --accent-base: color(srgb 0.006 0.9194 0.8139);
+
+  --card: color(srgb 0.1647 0.1647 0.1777 / 0.9);
+  --card-foreground: color(srgb 0.8228 0.8278 0.8278 / 0.98);
+  --popover: color(srgb 0.1647 0.1647 0.1777 / 0.96);
+  --popover-foreground: color(srgb 0.8228 0.8278 0.8278 / 0.98);
+
+  --primary: color(srgb 0.006 0.9194 0.8139 / 0.9);
+  --primary-foreground: color(srgb 0.1022 0.1022 0.1105 / 0.96);
+
+  --secondary: color(srgb 0.1647 0.1647 0.1777 / 0.8);
+  --secondary-foreground: color(srgb 0.8228 0.8278 0.8278 / 0.92);
+
+  --muted: color(srgb 0.1647 0.1647 0.1777 / 0.55);
+  --muted-foreground: color(srgb 0.8228 0.8278 0.8278 / 0.7);
+
+  --accent: color(srgb 0.006 0.9194 0.8139 / 0.18);
+  --accent-foreground: color(srgb 0.8228 0.8278 0.8278 / 0.96);
+
+  --destructive: color(srgb 0.006 0.9194 0.8139 / 0.62);
+  --destructive-foreground: color(srgb 0.1022 0.1022 0.1105 / 0.96);
+
+  --border: color(srgb 0.8228 0.8278 0.8278 / 0.2);
+  --input: color(srgb 0.8228 0.8278 0.8278 / 0.28);
+  --ring: color(srgb 0.006 0.9194 0.8139 / 0.5);
 }
 
 @theme inline {
@@ -51,7 +60,7 @@
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(180deg, var(--background-secondary) 0%, var(--background) 45%);
   color: var(--foreground);
   font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
 }

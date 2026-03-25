@@ -2,7 +2,16 @@ import React, { useState, useMemo } from 'react';
 import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Badge } from "@/app/_components/ui/badge";
-import { Search, Download, Save, ChevronDown, ChevronRight, Loader2 } from 'lucide-react';
+import {
+  Search,
+  Download,
+  Save,
+  ChevronDown,
+  ChevronRight,
+  Loader2,
+  ChevronsDown,
+  ChevronsUp,
+} from 'lucide-react';
 import TranslationRow from './TranslationRow';
 
 type TreeNode = {
@@ -75,9 +84,8 @@ function getDepthSectionClass(depth: number): string {
 type TranslationEditorProps = {
   translations: Record<string, string>;
   onChange: (key: string, newValue: string) => void;
-  onSave: () => void;
+  onSaveAndSendToUat: () => void;
   onExport: () => void;
-  onSendToUat: () => void;
   saving: boolean;
   sendingToUat: boolean;
   dirtyKeys: Set<string>;
@@ -86,9 +94,8 @@ type TranslationEditorProps = {
 export default function TranslationEditor({
   translations,
   onChange,
-  onSave,
+  onSaveAndSendToUat,
   onExport,
-  onSendToUat,
   saving,
   sendingToUat,
   dirtyKeys,
@@ -219,33 +226,43 @@ export default function TranslationEditor({
   return (
     <div className="space-y-4">
       {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            placeholder="Szukaj po kluczu lub treści..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10"
-          />
+      <div className="space-y-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Szukaj po kluczu lub treści..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            <Button
+              onClick={onSaveAndSendToUat}
+              disabled={saving || sendingToUat}
+              className="gap-2"
+            >
+              {saving || sendingToUat ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
+              Zapisz i wyślij do UAT
+            </Button>
+            <Button variant="outline" onClick={onExport} className="gap-2">
+              <Download className="w-4 h-4" /> Eksportuj JSON
+            </Button>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={expandAll}>
+        <div className="flex gap-2 sm:justify-end flex-wrap">
+          <Button variant="outline" onClick={expandAll} className="gap-2">
+            <ChevronsDown className="w-4 h-4" />
             Rozwiń wszystko
           </Button>
-          <Button variant="outline" onClick={collapseAll}>
+          <Button variant="outline" onClick={collapseAll} className="gap-2">
+            <ChevronsUp className="w-4 h-4" />
             Zwiń wszystko
-          </Button>
-          <Button onClick={onSave} disabled={saving} className="gap-2">
-            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            Zapisz
-          </Button>
-          <Button variant="outline" onClick={onSendToUat} disabled={sendingToUat} className="gap-2">
-            {sendingToUat ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-            Wyślij do UAT
-          </Button>
-          <Button variant="outline" onClick={onExport} className="gap-2">
-            <Download className="w-4 h-4" /> Eksportuj JSON
           </Button>
         </div>
       </div>

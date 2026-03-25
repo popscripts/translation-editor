@@ -120,8 +120,8 @@ export default function Home() {
     setLocalTranslations((prev) => (prev ? { ...prev, [key]: newValue } : prev));
   }
 
-  async function handleSave() {
-    if (!activeFileId || !localTranslations) return;
+  async function handleSave(): Promise<boolean> {
+    if (!activeFileId || !localTranslations) return false;
 
     setSaving(true);
     try {
@@ -140,8 +140,10 @@ export default function Home() {
 
       const updated = (await response.json()) as TranslationFile;
       setFiles((prev) => prev.map((file) => (file.id === updated.id ? updated : file)));
+      return true;
     } catch {
       alert("Nie udało się zapisać zmian.");
+      return false;
     } finally {
       setSaving(false);
     }
@@ -209,6 +211,15 @@ export default function Home() {
     } finally {
       setSendingToUat(false);
     }
+  }
+
+  async function handleSaveAndSendToUat() {
+    const saved = await handleSave();
+    if (!saved) {
+      return;
+    }
+
+    await handleSendToUat();
   }
 
   if (!activeFileId && !showUploader) {
@@ -322,9 +333,8 @@ export default function Home() {
             key={activeFileId}
             translations={localTranslations}
             onChange={handleTranslationChange}
-            onSave={handleSave}
+            onSaveAndSendToUat={handleSaveAndSendToUat}
             onExport={handleExport}
-            onSendToUat={handleSendToUat}
             saving={saving}
             sendingToUat={sendingToUat}
             dirtyKeys={dirtyKeys}
