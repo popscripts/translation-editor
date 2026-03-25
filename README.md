@@ -139,6 +139,13 @@ App will be available on [http://localhost:3001](http://localhost:3001).
 - Host port is `3001` to avoid conflict with an existing app on port `3000`.
 - SQLite file persists on host in `./data/translations.db` via mounted volume `./data:/app/data`.
 
+If you previously started the container with stricter file permissions and see `SQLITE_READONLY`, fix host directory permissions once:
+
+```bash
+sudo mkdir -p data
+sudo chmod 0777 data
+```
+
 To stop:
 
 ```bash
