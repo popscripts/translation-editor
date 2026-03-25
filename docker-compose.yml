@@ -1,0 +1,13 @@
+services:
+  json-translator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: json-translator
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env.docker
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

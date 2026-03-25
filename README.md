@@ -115,3 +115,32 @@ UAT_SHARED_SECRET=change-me-in-uat
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Run with Docker
+
+This repository includes production Docker setup for Next.js with SQLite persistence.
+
+1. Create Docker env file:
+
+```bash
+cp .env.docker.example .env.docker
+```
+
+2. Fill values in `.env.docker` (at minimum: `UAT_TARGET_URL`, `UAT_SHARED_SECRET`).
+
+3. Build and start container:
+
+```bash
+docker compose up -d --build
+```
+
+App will be available on [http://localhost:3001](http://localhost:3001).
+
+- Host port is `3001` to avoid conflict with an existing app on port `3000`.
+- SQLite file persists on host in `./data/translations.db` via mounted volume `./data:/app/data`.
+
+To stop:
+
+```bash
+docker compose down
+```
